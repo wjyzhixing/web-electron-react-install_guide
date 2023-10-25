@@ -108,56 +108,63 @@ const Hello = () => {
       // 处理从主进程返回的所选目录路径
       setSelectedDirectory(arg);
     });
-    // 监听主进程的响应
-    window.electron.ipcRenderer.once('encrypt-response', (arg) => {
-      console.log('Received API response:', arg, finish);
-      finish?.map((i: Record<string, string>) => {
-        if (i?.name === '服务器') {
-          i.finish = '成功';
-        }
-      });
-      setFinish(finish);
-      setUpdateCount(updateCount + 1);
-    });
-    // 监听主进程的响应
-    window.electron.ipcRenderer.once('encrypt-response2', (arg) => {
-      console.log('Received API response2:', arg, finish);
-      finish?.map((i: Record<string, string>) => {
-        if (i?.name === '企业管理器') {
-          console.log('hello');
-          i.finish = '成功';
-        }
-      });
-      setFinish(finish);
-      setUpdateCount(updateCount + 1);
-    });
-    // 监听主进程的响应
-    window.electron.ipcRenderer.once('encrypt-response3', (arg) => {
-      console.log('Received API response3:', arg, finish);
-      finish?.map((i: Record<string, string>) => {
-        if (i?.name === '数据库迁移服务') {
-          i.finish = '成功';
-        }
-      });
-      setFinish(finish);
-      setUpdateCount(updateCount + 1);
-    });
-    // 监听主进程的响应
-    window.electron.ipcRenderer.once('encrypt-response4', (arg) => {
-      console.log('Received API response4:', arg, finish);
-      finish?.map((i: Record<string, string>) => {
-        if (i?.name === '数据库监控服务') {
-          i.finish = '失败';
-        }
-      });
-      setFinish(finish);
-      setUpdateCount(updateCount + 1);
-    });
-  });
+  }, []);
 
-  useEffect(() => {
-    console.log('update');
-  }, [setUpdateCount]);
+  // useEffect(() => {
+  window.electron.ipcRenderer.once('selected-directory', (arg: any) => {
+    // 处理从主进程返回的所选目录路径
+    setSelectedDirectory(arg);
+  });
+  // 监听主进程的响应
+  window.electron.ipcRenderer.once('encrypt-response', (arg) => {
+    console.log('Received API response:', arg, finish);
+    finish?.map((i: Record<string, string>) => {
+      if (i?.name === '服务器') {
+        i.finish = '成功';
+      }
+    });
+    setFinish(JSON.parse(JSON.stringify(finish)));
+    // setUpdateCount(updateCount + 1);
+  });
+  // 监听主进程的响应
+  window.electron.ipcRenderer.once('encrypt-response2', (arg) => {
+    console.log('Received API response2:', arg, finish);
+    finish?.map((i: Record<string, string>) => {
+      if (i?.name === '企业管理器') {
+        console.log('hello');
+        i.finish = '成功';
+      }
+    });
+    setFinish(JSON.parse(JSON.stringify(finish)));
+    // setUpdateCount(updateCount + 1);
+  });
+  // 监听主进程的响应
+  window.electron.ipcRenderer.once('encrypt-response3', (arg) => {
+    console.log('Received API response3:', arg, finish);
+    finish?.map((i: Record<string, string>) => {
+      if (i?.name === '数据库迁移服务') {
+        i.finish = '成功';
+      }
+    });
+    setFinish(JSON.parse(JSON.stringify(finish)));
+    // setUpdateCount(updateCount + 1);
+  });
+  // 监听主进程的响应
+  window.electron.ipcRenderer.once('encrypt-response4', (arg) => {
+    console.log('Received API response4:', arg, finish);
+    finish?.map((i: Record<string, string>) => {
+      if (i?.name === '数据库监控服务') {
+        i.finish = '失败';
+      }
+    });
+    setFinish(JSON.parse(JSON.stringify(finish)));
+    // setUpdateCount(updateCount + 1);
+  });
+  // });
+
+  // useEffect(() => {
+  //   console.log('update');
+  // }, [setUpdateCount]);
 
   // 第四步
   const treeData = [
